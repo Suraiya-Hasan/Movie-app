@@ -1,0 +1,464 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --primary-color:#19515e;
+    --secondary-color: #1c1f3a;
+}
+
+body{
+    background-color: var(--primary-color);
+    font-family: "Poppins", "sans-serif";
+}
+header{
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--secondary-color);
+}
+
+
+
+.search{
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    font-size: 1rem;
+    color: white;
+    font-family: inherit;
+}
+
+.search:focus{
+    outline: 0;
+    background-color: var(--primary-color);
+}
+
+.search::placeholder{
+    color: #7378c5;
+}
+
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movie{
+    width: 300px;
+    margin: 1rem;
+    border-radius: 3px;
+    box-shadow: 0.2px 4px 5px rgba(0, 0, 0,0.1);
+    background-color: var(--secondary-color);
+    position: relative;
+    overflow: hidden;
+}
+.movie img{
+    width: 100%;
+
+}
+
+.movie-info{
+    color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem 1rem;
+    letter-spacing: 0.5px;
+}
+
+.movie-info h3{
+    margin-top: 0;
+}
+
+.movie-info span{
+    background-color: var(--primary-color);
+    padding: 0.25rem 0.5rem;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    font-weight: bold;
+}
+
+.movie-info span.green{
+    color: lightgreen;
+}
+.movie-info span.orange{
+    color: orange;
+}
+.movie-info span.red{
+    color: orangered;
+}
+
+.overview{
+    min-height:50%;
+    max-height: 50%;
+    overflow: auto;
+    overflow-x: hidden;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: whitesmoke;
+    padding: 1rem;
+    max-height: 100%;
+    transform: translateY(101%);
+    -webkit-transform: translateY(101%);
+    -moz-transform: translateY(101%);
+    -ms-transform: translateY(101%);
+    -o-transform: translateY(101%);
+    transition: transform 0.3s ease-in;
+    -webkit-transition: transform 0.3s ease-in;
+    -moz-transition: transform 0.3s ease-in;
+    -ms-transition: transform 0.3s ease-in;
+    -o-transition: transform 0.3s ease-in;
+}
+
+.movie:hover .overview{
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+
+.preview__data:hover .overview{
+    transform: translateY(0);
+    -webkit-transform: translateY(0);
+    -moz-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+}
+.close{
+    display: inline;
+}
+
+#tags{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+}
+.tag{
+    color: whitesmoke;
+    padding: 10px 20px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+     margin: 5px;
+     display: inline-block;
+     cursor: pointer;
+}
+
+.tag.highlight{
+    background-color: whitesmoke;
+    color: var(--primary-color);
+}
+
+.tag.highlight-red{
+    background-color: red;
+    color: whitesmoke;
+}
+
+.no-results{
+    color: whitesmoke;
+}
+
+.pagination{
+    display:flex;
+    margin: 10px 30px;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+}
+
+.page{
+    padding: 20px;
+    cursor: pointer;
+}
+
+.page.disabled{
+    color: gray;
+    cursor: not-allowed;
+}
+
+.current{
+    padding: 5px 15px;
+    border: 2px solid rgb(15, 15, 58);
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: 600;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+
+/* CSS */
+.know-more{
+    background-color: whitesmoke;
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid var(--primary-color);
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    padding: 10px 20px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.remove{
+    background-color: whitesmoke;
+    color: red;
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid red;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    padding: 10px 20px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.remove:hover{
+    background-color: red;
+    color: whitesmoke;
+}
+
+.know-more:hover{
+    background-color: var(--primary-color);
+    color: whitesmoke;
+}
+
+.overlay {
+    /* Height & width depends on how you want to reveal the overlay (see JS below) */   
+    height: 100%;
+    width: 0;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    background-color: rgb(0,0,0); /* Black fallback color */
+    background-color: rgba(0,0,0, 0.9); /* Black w/opacity */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    transition: 0.5s; /* 0.5 second transition effect to slide in or slide down the overlay (height or width, depending on reveal) */
+  }
+  
+  /* Position the content inside the overlay */
+  .overlay-content {
+    position: relative;
+    top: 10%; /* 25% from the top */
+    width: 100%; /* 100% width */
+    text-align: center; /* Centered text/links */
+    margin-top: 30px; /* 30px top margin to avoid conflict with the close button on smaller screens */
+  }
+  
+  /* The navigation links inside the overlay */
+  .overlay a {
+    padding: 8px;
+    text-decoration: none;
+    font-size: 36px;
+    color: #818181;
+    display: block; /* Display block instead of inline */
+    transition: 0.3s; /* Transition effects on hover (color) */
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .overlay a:hover, .overlay a:focus {
+    color: #f1f1f1;
+  }
+  
+  /* Position the close button (top right corner) */
+  .overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+  }
+  
+  /* When the height of the screen is less than 450 pixels, change the font-size of the links and position the close button again, so they don't overlap */
+  @media screen and (max-height: 450px) {
+    .overlay a {font-size: 20px}
+    .overlay .closebtn {
+      font-size: 40px;
+      top: 15px;
+      right: 35px;
+    }
+  }
+
+
+
+  .embed.hide{
+    display: none;
+  }
+
+  .embed.show{
+    display: inline-block;
+  }
+
+.arrow{
+    position: absolute;
+}
+
+.arrow.left-arrow{
+    left: 5%;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+.arrow.right-arrow{
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    right: 5%;
+}
+.dots{
+    margin: 30px;
+}
+
+.dots .dot{
+    padding: 5px 15px;
+    border: 2px solid rgb(15, 15, 58);
+    border-radius: 50%;
+    font-size: 20px;
+    font-weight: 600;
+    color: whitesmoke;
+    margin: 5px;
+}
+
+.dots .dot.active{
+    border-color: whitesmoke;
+}
+
+
+
+/* CSS */
+.favorite, .favorite-btn{
+    background-color: whitesmoke;
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: bold;
+    border: 1px solid var(--secondary-color);
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    padding: 10px 20px;
+    margin-top: 5px;
+    cursor: pointer;
+}
+
+.favorite:hover{
+    background-color: var(--secondary-color);
+    color: whitesmoke;
+}
+.favorite-btn{
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    float: right;
+}
+
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .preview__fig{
+    display: flex;
+    flex: 0 0 2.8rem;
+    border-radius: 50%;
+    height: 2.8rem;
+    width: 2.8rem;
+    margin-right: 2rem;
+    position: relative;
+    backface-visibility: hidden;
+  }
+  .preview__data{
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr 2rem;
+    row-gap: 0.1rem;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .preview__link{
+      display: flex;
+      align-items: center;
+      padding: 1.5rem 3.25rem;
+      transition: all 0.3s;
+      border-right: 1px solid #fff;
+      text-decoration: none;
+    }
+    .favorite-list, .preview{
+        list-style-type: none;
+    }
+    .preview__name{
+        font-family: inherit;
+        font-size: 20px;
+        display: block;
+        color: var(--secondary-color);
+    }
