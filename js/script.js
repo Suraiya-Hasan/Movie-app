@@ -1,6 +1,7 @@
 // constants.js
 import { API_KEY, API_URL, SRC_URL, IMG_URL } from "./config.js";
 import { handleError } from "./errorHandling.js";
+import { addFavorite, removeFavorite, addToModal } from "./favorite.js";
 import { prevListener, nextListner } from "./pagination.js";
 import { setGenre } from "./genreTags.js";
 import { getMovies } from "./api.js";
@@ -14,8 +15,8 @@ const search = document.getElementById('search');
 
 const prev = document.getElementById('prev');
 const next = document.getElementById('next');
-const modalContent = document.getElementById('modal-content');
 const fvModalBtn = document.getElementById('favorite-btn');
+
 const fvAddBtn = document.querySelector('.fav-add-btn');
 const closeBtn = document.getElementById('closebtn');
 
@@ -44,7 +45,7 @@ export const showMovies = function (data) {
             ${overview};
             <br/>
             <button class = 'know-more' id='${id}'> Know More </button>
-            <button class = 'favorite fav-add-btn' id='${id}&fav-add-btn'> Add to favorite </button>
+            <button class = 'favorite fav-add-btn ' id='${id}&fav-add-btn' style="width: auto; border-radius: 50px"> Add to favorite </button>
         </div>
         `
 
@@ -61,6 +62,7 @@ export const showMovies = function (data) {
             }
             else {
                 if (selectedFavorite.includes(id)) {
+                    await removeFavorite(id);
                     await removeFavorite(id);
                     selectedFavorite.forEach((fid, index) => {
                         if (fid === id) {
@@ -115,91 +117,3 @@ form.addEventListener('submit', (e) => {
 });
 
 setGenre();
-
-
-
-
-///doesnt work yet///
-async function addFavorite(id) {
-    //get favorites elements for a session
-    const options = {
-        method: 'POST',
-        headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
-        },
-        body: JSON.stringify({ media_type: 'movie', media_id: id, favorite: true })
-    };
-
-    fetch('https://api.themoviedb.org/3/account/20033207/favorite?' + API_KEY, options)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.log(err.status_message));
-}
-async function removeFavorite(id) {
-    //get favorites elements for a session
-    const options = {
-        method: 'POST',
-        headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
-        },
-        body: JSON.stringify({ media_type: 'movie', media_id: id, favorite: false })
-    };
-
-    fetch('https://api.themoviedb.org/3/account/20033207/favorite?' + API_KEY, options)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => handleError(err.status_message));
-}
-
-
-
-export async function getFavourite() {
-    const options = {
-        method: 'GET',
-        headers: {
-            accept: 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
-        }
-    };
-
-    const res = await fetch('https://api.themoviedb.org/3/account/20033207/favorite/movies?language=en-US&page=1&sort_by=created_at.asc&' + API_KEY, options)
-    const data = await res.json();
-    const favorites = await data.results;
-    return favorites;
-}
-
-
-export async function addToModal() {
-
-    const fav = await getFavourite();
-    if (fav.length === 0)
-        modalContent.innerHTML = `<p>
-    No favorites yet. Add a new one! 😊
-  </p>`
-    else {
-        modalContent.innerHTML = '';
-        for (const { poster_path, original_title, id } of fav) {
-            const liEL = document.createElement("li");
-            liEL.classList.add("preview");
-            liEL.innerHTML = `<br><hr>
-            <div class="preview__link">
-            <figure >
-            <img class="preview__fig" src="${poster_path ? IMG_URL + poster_path : 'https://placehold.co?text=No+Image'}" alt="${original_title}"}" alt="Test" />
-            </figure>
-            <div class="preview__data">
-            <h4 class="preview__name">
-            ${original_title}
-            </h4>
-            </div>
-            <button class = 'remove' id=${id}'>Remove</button>
-            </div>
-            <hr>
-            `;
-            modalContent.appendChild(liEL);
-        }
-    }
-}

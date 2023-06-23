@@ -1,6 +1,7 @@
 export let lastURL = '';
 import { controlPage ,scrollToResultTop} from "./pagination.js";
-import { showMovies, getFavourite, addToModal } from "./script.js";
+import { getFavourite, addToModal } from "./favorite.js";
+import {showMovies} from "../js/script.js"
 //fetching data
 export const getMovies = async function (url) {
     lastURL = url;
@@ -11,6 +12,7 @@ export const getMovies = async function (url) {
             showMovies(data.results);
             controlPage(data);
             scrollToResultTop();
+            await getFavourite();
             await addToModal();
         } else
             main.innerHTML = `<h1 class="no-results">No Results Found</h1>`
