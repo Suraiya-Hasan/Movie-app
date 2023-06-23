@@ -1,7 +1,7 @@
 // constants.js
 import { API_KEY, API_URL, SRC_URL, IMG_URL } from "./config.js";
 import { handleError } from "./errorHandling.js";
-import { addFavorite, removeFavorite, addToModal } from "./favorite.js";
+import { addFavorite, removeFavorite, addToModal, getFavourite } from "./favorite.js";
 import { prevListener, nextListner } from "./pagination.js";
 import { setGenre } from "./genreTags.js";
 import { getMovies } from "./api.js";
@@ -58,22 +58,25 @@ export const showMovies = function (data) {
             if (selectedFavorite.length === 0) {
                 selectedFavorite.push(id);
                 await addFavorite(id);
+                await getFavourite();
                 await addToModal();
             }
             else {
                 if (selectedFavorite.includes(id)) {
-                    await removeFavorite(id);
-                    await removeFavorite(id);
                     selectedFavorite.forEach((fid, index) => {
                         if (fid === id) {
                             selectedFavorite.splice(index, 1);
                         }
                     }
                     )
+                    await removeFavorite(id);
+                    await getFavourite();
                     await addToModal();
                 } else {
                     selectedFavorite.push(id);
                     await addFavorite(id);
+                    await getFavourite();
+
                     await addToModal();
                 }
             }

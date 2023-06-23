@@ -80,11 +80,14 @@ export async function addToModal() {
             ${original_title}
             </h4>
             </div>
-            <button class = 'remove' id=${id}'>Remove</button>
+            <button class = 'remove' id='${id}'>Remove</button>
             </div>
             <hr>
             `;
             modalContent.appendChild(liEL);
+            document.getElementById(id).addEventListener('click', async () => {
+                await removeFavorite(id);
+            })
         }
 
     }
