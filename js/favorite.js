@@ -1,5 +1,6 @@
 import { API_KEY, IMG_URL } from "./config.js";
 import { handleError } from "./errorHandling.js";
+import { addRating, addToModalRating } from "../rating.js";
 const modalContent = document.getElementById('modal-content');
 export async function addFavorite(id) {
     //get favorites elements for a session
@@ -19,9 +20,10 @@ export async function addFavorite(id) {
 
             getFavourite();
             addToModal();
-            alert(`Successfully added to favorite. ✔`);
             if (response.success == false)
-                throw new Error("Could not add to favourite.");
+            throw new Error("Could not add to favourite. 🚫");
+            alert(`Successfully added to favorite. ✔`);
+            
         })
         .catch(err => {
             handleError(err.message);
@@ -82,24 +84,30 @@ export async function addToModal() {
                 </p>`
         else {
             modalContent.innerHTML = '';
-            for (const { poster_path, original_title, id } of fav) {
+            for (const { poster_path, title, id } of fav) {
                 const liEL = document.createElement("li");
                 liEL.classList.add("preview");
                 liEL.innerHTML = `<br><hr>
                 <div class="preview__link">
                 <figure >
-                <img class="preview__fig" src="${poster_path ? IMG_URL + poster_path : 'https://placehold.co?text=No+Image'}" alt="${original_title}"}" alt="Test" />
+                <img class="preview__fig" src="${poster_path ? IMG_URL + poster_path : 'https://placehold.co?text=No+Image'}" alt="${title}"}" alt="Test" />
                 </figure>
                 <div class="preview__data">
                 <h4 class="preview__name">
-                ${original_title}
+                ${title}
                 </h4>
                 </div>
+                <button class = 'rate' id='rate'>Rate</button>
                 <button class = 'remove' id='${id}'>Remove</button>
                 </div>
                 <hr>
                 `;
                 modalContent.appendChild(liEL);
+                document.getElementById('rate').addEventListener('click',async()=>{
+                    let value = (prompt("Enter a rating between 1 to 10:"));
+                    await addRating(id, value);
+                })
+                await addToModalRating();
                 document.getElementById(id).addEventListener('click', async () => {
                     await removeFavorite(id);
                 })

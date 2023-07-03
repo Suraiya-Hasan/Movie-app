@@ -16,25 +16,22 @@
             class="search"
             placeholder="Search">
         </form>
-        <!-- <div class="dropdown">
-            <button class="dropbtn">Dropdown</button>
+        <div class="dropdown">
+            <button class="dropbtn">Movie Lists</button>
             <div class="dropdown-content">
-                <button class="favorite-btn" id="favorite-btn">Favorites</button>
-              <a href="#">Link 2</a>
-              <a href="#">Link 3</a>
+              <a href="#favorite-btn">Favourites</a>
+              <a href="#ratings-btn">Ratings</a>
+              <a href="#watchlist-btn">Watchlist</a>
             </div>
-          </div> -->
+          </div>
     </header>
     <div id="tags"></div>
-    <div >
-    <button class="favorite-btn" id="favorite-btn">Favorites</button>
-    <!-- <button class="watchlist-btn" id="watchlist-btn">Watchlist</button> -->
-    </div>
+    
     <div id="myModal" class="modal">
         <ul class="favourite-list">
             <!-- Modal content -->
             <div class="modal-content" >
-            <span class="close">&times;</span>
+            <span class="close" id="close-fvt">&times;</span>
             <br>
             <div id="modal-content">
           <div class='movie-item'>
@@ -55,8 +52,65 @@
                 <hr>
             </li> -->
             </ul>
-        </div>
-        </div>
+    </div>
+
+    <div id="myModalRating" class="modalRating">
+        <ul class="rating-list">
+            <!-- Modal content -->
+            <div class="modal-content-rating" >
+            <span class="close" id="close-rating">&times;</span>
+            <br>
+            <div id="modal-content-rating">
+          <div class='movie-item'>
+            <p>
+                No ratings yet. Add a new one! 😊
+              </p>
+            <!-- <li class="preview">
+                <a class="preview__link" href="#23456">
+                    <figure class="preview__fig">
+                    <img src="poster.jpg" alt="Test" />
+                    </figure>
+                    <div class="preview__data">
+                    <h4 class="preview__name">
+                        Movie 1
+                    </h4>
+                    </div>
+                </a>
+                <hr>
+            </li> -->
+            </ul>
+    </div>
+
+    <div id="myModalWatchlist" class="modalWatchlist">
+        <ul class="watchlist-list">
+            <!-- Modal content -->
+            <div class="modal-content-watchlist" >
+            <span class="close" id="close-watchlist">&times;</span>
+            <br>
+            <div id="modal-content-watchlist">
+          <div class='movie-item'>
+            <p>
+                No watchlist item yet. Add a new one! 😊
+              </p>
+            <!-- <li class="preview">
+                <a class="preview__link" href="#23456">
+                    <figure class="preview__fig">
+                    <img src="poster.jpg" alt="Test" />
+                    </figure>
+                    <div class="preview__data">
+                    <h4 class="preview__name">
+                        Movie 1
+                    </h4>
+                    </div>
+                </a>
+                <hr>
+            </li> -->
+            </ul>
+    </div>
+
+
+
+    </div>
     </div>
       </div>      
     <div id="myNav" class="overlay">
@@ -80,6 +134,23 @@
         <div class="current" id="current">1</div>
         <div class="page" id="next">⏭</div>
     </div>
+    <div >
+        
+        <!-- <button class="watchlist-btn" id="watchlist-btn">Watchlist</button> -->
+        </div>
+        <div class="row">
+            <div class="column">
+              <div class="card">
+                <button class="favorite-btn" id="favorite-btn">Favorites</button>
+              </div>
+            </div>
+            <div class="column">
+              <div class="card"><button class="favorite-btn" id="ratings-btn">Ratings</button></div>
+            </div>
+            <div class="column">
+              <div class="card"><button class="favorite-btn" id="watchlist-btn">Watchlist</button></div>
+            </div>
+          </div>
 
     <script src="../js/script.js" type="module"></script>
 </body>

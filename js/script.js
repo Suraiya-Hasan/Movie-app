@@ -16,12 +16,18 @@ const search = document.getElementById('search');
 const prev = document.getElementById('prev');
 const next = document.getElementById('next');
 const fvModalBtn = document.getElementById('favorite-btn');
+const rtModalBtn = document.getElementById('ratings-btn');
+const wlModalBtn = document.getElementById('watchlist-btn');
 
 const fvAddBtn = document.querySelector('.fav-add-btn');
 const closeBtn = document.getElementById('closebtn');
 
 let modal = document.getElementById("myModal");
+let modalRating = document.getElementById("myModalRating");
+let modalWatchlist = document.getElementById("myModalWatchlist");
 let span = document.getElementsByClassName("close")[0];
+const closeRatingBtn = document.getElementById('close-rating');
+const closeWatchlistBtn = document.getElementById('close-watchlist');
 
 const selectedFavorite = [];
 
@@ -103,14 +109,15 @@ span.onclick = function () {
     modal.style.display = "none";
 }
 window.onclick = function (event) {
-    if (event.target == modal) {
+    if (event.target == modal || event.target == modalRating || event.target == modalWatchlist) {
         modal.style.display = "none";
+        modalRating.style.display = 'none';
+        modalWatchlist.style.display = 'none';
     }
 }
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-
     const searchTerm = search.value;
     setGenre();
     if (searchTerm) {
@@ -121,3 +128,18 @@ form.addEventListener('submit', (e) => {
 });
 getMovies(API_URL);
 setGenre();
+
+
+rtModalBtn.onclick = function () {
+    modalRating.style.display = "block";
+}
+closeRatingBtn.onclick = function () {
+    modalRating.style.display = "none";
+}
+
+wlModalBtn.onclick = function () {
+    modalWatchlist.style.display = "block";
+}
+closeWatchlistBtn.onclick = function () {
+    modalWatchlist.style.display = "none";
+}
