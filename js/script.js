@@ -30,6 +30,7 @@ const closeRatingBtn = document.getElementById('close-rating');
 const closeWatchlistBtn = document.getElementById('close-watchlist');
 
 const selectedFavorite = [];
+const rated = [];
 
 
 //show movies to dom
@@ -46,6 +47,7 @@ export const showMovies = function (data) {
         openNav(movie);
       });
       document.getElementById(`${id}&fav-add-btn`).addEventListener("click", async () => {
+        console.log(document.getElementById(`${id}&fav-add-btn`));
         if (selectedFavorite.length === 0) {
           selectedFavorite.push(id);
           await addFavorite(id);

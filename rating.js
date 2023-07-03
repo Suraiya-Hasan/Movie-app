@@ -19,9 +19,9 @@ export async function addRating(id,value) {
       if(value<0 || value>10 ) throw new Error(data.status_message);
       else if(value == null) return;
       else alert("Rating successfully stored ✔");
-      
-      const rate = document.getElementById('rate');
+      const rate = document.getElementById(`rate${id}`);
       rate.classList.add('rated');
+      await addToModalRating();
   } catch (error) {
       handleError(error.message);
   }
@@ -36,9 +36,9 @@ export async function getRatedMovie() {
     }
   };
   
-  const res =await fetch('https://api.themoviedb.org/3/account/20033207/rated/movies?language=en-US&page=1&sort_by=created_at.asc', options)
+  const res =await fetch('https://api.themoviedb.org/3/account/20033207/rated/movies?language=en-US&page=1&sort_by=created_at.desc', options)
   const data = await res.json();
-  const rated = await data.results
+  const rated = await data.results;
   return rated;
 }
 
@@ -47,7 +47,6 @@ export async function addToModalRating() {
 
   try {
       const rate = await getRatedMovie();
-      console.log(rate);
       if (rate.length === 0)
           modalContent.innerHTML = `<p>
               No ratings yet. Add a new one! 😊

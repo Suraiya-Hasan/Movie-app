@@ -97,13 +97,13 @@ export async function addToModal() {
                 ${title}
                 </h4>
                 </div>
-                <button class = 'rate' id='rate'>Rate</button>
+                <button class = 'rate' id='rate${id}'>Rate</button>
                 <button class = 'remove' id='${id}'>Remove</button>
                 </div>
                 <hr>
                 `;
                 modalContent.appendChild(liEL);
-                document.getElementById('rate').addEventListener('click',async()=>{
+                document.getElementById(`rate${id}`).addEventListener('click',async()=>{
                     let value = (prompt("Enter a rating between 1 to 10:"));
                     await addRating(id, value);
                 })
