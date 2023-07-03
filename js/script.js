@@ -28,61 +28,62 @@ const selectedFavorite = [];
 
 //show movies to dom
 export const showMovies = function (data) {
+    const main = document.getElementById("main");
     main.innerHTML = "";
-    data.forEach(movie => {
-        const { title, vote_average, id } = movie;
-        let { poster_path, overview } = movie;
-        const movieEl = document.createElement("div");
-        movieEl.classList.add("movie");
-        movieEl.innerHTML = `
-        <img src="${poster_path ? IMG_URL + poster_path : 'https://placehold.co/300x450?text=No+Image'}" alt="${title}" width="300" height="450"}>
-        <div class="movie-info">
-            <h2>${title}</h2>
-            <span class="${getColor(vote_average)}">${+vote_average.toFixed(1)}</span>
-        </div>
-        <div class="overview">
-            <h3>${title}</h3>
-            ${overview};
-            <br/>
-            <button class = 'know-more' id='${id}'> Know More </button>
-            <button class = 'favorite fav-add-btn ' id='${id}&fav-add-btn' style="width: auto; border-radius: 50px"> Add to favorite </button>
-        </div>
-        `
-
-        main.appendChild(movieEl);
-
-        document.getElementById(id).addEventListener('click', () => {
-            openNav(movie);
-        });
-        document.getElementById(`${id}&fav-add-btn`).addEventListener('click', async () => {
-            if (selectedFavorite.length === 0) {
-                selectedFavorite.push(id);
-                await addFavorite(id);
-                await getFavourite();
-                await addToModal();
-            }
-            else {
-                if (selectedFavorite.includes(id)) {
-                    selectedFavorite.forEach((fid, index) => {
-                        if (fid === id) {
-                            selectedFavorite.splice(index, 1);
-                        }
-                    }
-                    )
-                    await removeFavorite(id);
-                    await getFavourite();
-                    await addToModal();
-                } else {
-                    selectedFavorite.push(id);
-                    await addFavorite(id);
-                    await getFavourite();
-
-                    await addToModal();
-                }
-            }
-        });
-    })
-}
+  
+    data.forEach((movie) => {
+      const { title, vote_average, id, poster_path, overview } = movie;
+      const movieEl = createMovieElement(title, vote_average, id, poster_path, overview);
+      main.appendChild(movieEl);
+  
+      document.getElementById(id).addEventListener("click", () => {
+        openNav(movie);
+      });
+      document.getElementById(`${id}&fav-add-btn`).addEventListener("click", async () => {
+        if (selectedFavorite.length === 0) {
+          selectedFavorite.push(id);
+          await addFavorite(id);
+        } else {
+          if (selectedFavorite.includes(id)) {
+            selectedFavorite = selectedFavorite.filter((fid) => fid !== id);
+            await removeFavorite(id);
+          } else {
+            selectedFavorite.push(id);
+            await addFavorite(id);
+          }
+        }
+        await getFavourite();
+        await addToModal();
+      });
+    });
+  };
+  
+  function createMovieElement(title, vote_average, id, poster_path, overview) {
+    const movieEl = document.createElement("div");
+    movieEl.classList.add("movie");
+  
+    const posterSrc = poster_path ? IMG_URL + poster_path : "https://placehold.co/300x450?text=No+Image";
+    const averageVote = +vote_average.toFixed(1);
+    const colorClass = getColor(vote_average);
+  
+    movieEl.innerHTML = `
+      <img src="${posterSrc}" alt="${title}" width="300" height="450"}>
+      <div class="movie-info">
+          <h2>${title}</h2>
+          <span class="${colorClass}">${averageVote}</span>
+      </div>
+      <div class="overview">
+          <h3>${title}</h3>
+          ${overview};
+          <br/>
+          <button class="know-more" id="${id}"> Know More </button>
+          <button class="favorite fav-add-btn" id="${id}&fav-add-btn" style="width: auto; border-radius: 50px"> Add to favorite </button>
+      </div>
+    `;
+  
+    return movieEl;
+  }
+  
 
 function getColor(vote) {
     if (vote >= 8) return "green";
@@ -90,7 +91,7 @@ function getColor(vote) {
     else return "red";
 }
 
-getMovies(API_URL);
+
 
 next.addEventListener('click', nextListner);
 prev.addEventListener('click', prevListener)
@@ -118,5 +119,5 @@ form.addEventListener('submit', (e) => {
         getMovies(API_URL);
     }
 });
-
+getMovies(API_URL);
 setGenre();
