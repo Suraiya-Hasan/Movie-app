@@ -1,33 +1,31 @@
 import { API_KEY, IMG_URL, account_id } from "./config.js";
 import { handleError } from "./errorHandling.js";
-import { addRating, addToModalRating } from "../rating.js";
+import { addRating, addToModalRating } from "./rating.js";
 const modalContent = document.getElementById('modal-content');
 export async function addFavorite(id) {
     //get favorites elements for a session
-    const options = {
-        method: 'POST',
-        headers: {
-            accept: 'application/json',
-            'content-type': 'application/json',
-            Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
-        },
-        body: JSON.stringify({ media_type: 'movie', media_id: id, favorite: true })
-    };
-
-    fetch('https://api.themoviedb.org/3/account/20033207/favorite?' + API_KEY, options)
-        .then(response => response.json())
-        .then(response => {
-
-            getFavourite();
-            addToModal();
-            if (response.success == false)
+    try {
+        const options = {
+            method: 'POST',
+            headers: {
+                accept: 'application/json',
+                'content-type': 'application/json',
+                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+            },
+            body: JSON.stringify({ media_type: 'movie', media_id: id, favorite: true })
+        };
+    
+        const response = await fetch('https://api.themoviedb.org/3/account/20033207/favorite?' + API_KEY, options)
+        const data = await response.json();
+        await getFavourite();
+        await addToModal();
+        if (data.success == false)
             throw new Error("Could not add to favourite. 🚫");
-            alert(`Successfully added to favorite. ✔`);
-            
-        })
-        .catch(err => {
-            handleError(err.message);
-        });
+        alert(`Successfully added to favorite. ✔`);
+    } catch (error) {
+        handleError(error.message);
+    }
+
 }
 export async function removeFavorite(id) {
     //get favorites elements for a session
@@ -63,7 +61,7 @@ export async function getFavourite() {
                 Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
             }
         };
-    
+
         const res = await fetch(`https://api.themoviedb.org/3/account/${account_id}/favorite/movies?language=en-US&page=1&sort_by=created_at.desc&` + API_KEY, options)
         const data = await res.json();
         const favorites = await data.results;
@@ -80,7 +78,7 @@ export async function addToModal() {
         const fav = await getFavourite();
         if (fav.length === 0)
             modalContent.innerHTML = `<p>
-                No favorites yet. Add a new one! 😊
+                No favorites yet. Add a new one! 🎬
                 </p>`
         else {
             modalContent.innerHTML = '';
@@ -103,7 +101,7 @@ export async function addToModal() {
                 <hr>
                 `;
                 modalContent.appendChild(liEL);
-                document.getElementById(`rate${id}`).addEventListener('click',async()=>{
+                document.getElementById(`rate${id}`).addEventListener('click', async () => {
                     let value = (prompt("Enter a rating between 1 to 10:"));
                     await addRating(id, value);
                 })
@@ -112,7 +110,7 @@ export async function addToModal() {
                     await removeFavorite(id);
                 })
             }
-    
+
         }
     } catch (error) {
         handleError(error.message);

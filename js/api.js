@@ -2,8 +2,9 @@ export let lastURL = '';
 import { controlPage ,scrollToResultTop} from "./pagination.js";
 import { getFavourite, addToModal } from "./favorite.js";
 import {showMovies} from "../js/script.js"
-import { addToModalRating, getRatedMovie } from "../rating.js";
+import { addToModalRating, getRatedMovie } from "./rating.js";
 import { handleError } from "./errorHandling.js";
+import { addToModalWatchlist, getWatchlist } from "./watchlist.js";
 //fetching data
 export const getMovies = async function (url) {
     lastURL = url;
@@ -18,6 +19,8 @@ export const getMovies = async function (url) {
             await addToModal();
             await getRatedMovie();
             await addToModalRating();
+            await getWatchlist();
+            await addToModalWatchlist();
         } else
             main.innerHTML = `<h1 class="no-results">No Results Found</h1>`
     } catch (error) {

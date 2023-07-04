@@ -1,6 +1,6 @@
 const modalContent = document.getElementById('modal-content-rating');
-import { handleError } from "./js/errorHandling.js";
-import { IMG_URL,account_id } from "./js/config.js";
+import { handleError } from "./errorHandling.js";
+import { IMG_URL,account_id } from "./config.js";
 
 export async function addRating(id,value) {
   try {

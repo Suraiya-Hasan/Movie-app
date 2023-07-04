@@ -1,12 +1,12 @@
 // constants.js
-import { API_KEY, API_URL, SRC_URL, IMG_URL } from "./config.js";
-import { handleError } from "./errorHandling.js";
+import { API_URL, SRC_URL, IMG_URL } from "./config.js";
+
 import { addFavorite, removeFavorite, addToModal, getFavourite } from "./favorite.js";
 import { prevListener, nextListner } from "./pagination.js";
 import { setGenre } from "./genreTags.js";
 import { getMovies } from "./api.js";
 import { openNav, closeNav } from "./movieDetails.js";
-import { addRating } from "../rating.js";
+import { getMovieById, showDetails } from "./singleMovieDetail.js";
 
 
 const form = document.getElementById('form');
@@ -23,11 +23,9 @@ const closeBtn = document.getElementById('closebtn');
 let modal = document.getElementById("myModal");
 let modalRating = document.getElementById("myModalRating");
 let modalWatchlist = document.getElementById("myModalWatchlist");
-let modalSingle = document.getElementById('singleModal');
 let span = document.getElementsByClassName("close")[0];
 const closeRatingBtn = document.getElementById('close-rating');
 const closeWatchlistBtn = document.getElementById('close-watchlist');
-const closeSingleBtn = document.getElementById('close-single');
 
 const selectedFavorite = [];
 
@@ -60,17 +58,18 @@ export const showMovies = function (data) {
       if (selectedFavorite.length === 0) {
         selectedFavorite.push(id);
         await addFavorite(id);
+        await getFavourite();
+        await addToModal();
       } else {
-        if (selectedFavorite.includes(id)) {
-          selectedFavorite = selectedFavorite.filter((fid) => fid !== id);
-          await removeFavorite(id);
-        } else {
+        if (selectedFavorite.includes(id)) alert('Already in Favorites 🍿');
+        else {
           selectedFavorite.push(id);
           await addFavorite(id);
+          await getFavourite();
+          await addToModal();
         }
       }
-      await getFavourite();
-      await addToModal();
+
     });
   });
 };
@@ -156,59 +155,3 @@ closeWatchlistBtn.onclick = function () {
   modalWatchlist.style.display = "none";
 }
 
-async function getMovieById(id) {
-  try {
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
-      }
-    };
-
-    const response = await fetch('https://api.themoviedb.org/3/movie/' + id + '?language=en-US&' + API_KEY, options);
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    handleError(error.message);
-  }
-}
-
-async function showDetails(id) {
-  try {
-    const data = await getMovieById(id);
-    modalSingle.style.display = "block";
-    closeSingleBtn.onclick = function () {
-      modalSingle.style.display = "none";
-    }
-    if (data.success == false) document.getElementById('modal-content-single').innerHTML = `<p>
-    Data not Found!
-  </p>`;
-    else {
-      document.getElementById('modal-content-single').innerHTML = '';
-      const html = `
-      <img class="imageSingle" src="${data.poster_path ? IMG_URL + data.poster_path : "https://placehold.co/300x450?text=No+Image"}" alt="${data.title}">
-      <div class="detailsSingle">
-      <div class="titleSingle">${data.title}</div>
-        <div class="overviewSingle">
-          ${data.overview}
-        </div>
-        <div class="buttonsSingle">
-          <button class='single' id="favor">Add to Favourites</button>
-          <button class='single' id='rate'>Rate the Movie</button>
-          <button class='single' id='watchlist'>Add to Watchlist</button>
-        </div>
-      </div>`
-      document.getElementById('modal-content-single').innerHTML = html;
-      document.getElementById('favor').addEventListener('click', async () => {
-        await addFavorite(id);
-      })
-      document.getElementById(`rate`).addEventListener('click', async () => {
-        let value = (prompt("Enter a rating between 1 to 10:"));
-        await addRating(id, value);
-      })
-    }
-  } catch (error) {
-    handleError(error.message);
-  }
-}
