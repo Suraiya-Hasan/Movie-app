@@ -1,4 +1,4 @@
-import { API_KEY, IMG_URL } from "./config.js";
+import { API_KEY, IMG_URL, account_id } from "./config.js";
 import { handleError } from "./errorHandling.js";
 import { addRating, addToModalRating } from "../rating.js";
 const modalContent = document.getElementById('modal-content');
@@ -64,7 +64,7 @@ export async function getFavourite() {
             }
         };
     
-        const res = await fetch('https://api.themoviedb.org/3/account/20033207/favorite/movies?language=en-US&page=1&sort_by=created_at.desc&' + API_KEY, options)
+        const res = await fetch(`https://api.themoviedb.org/3/account/${account_id}/favorite/movies?language=en-US&page=1&sort_by=created_at.desc&` + API_KEY, options)
         const data = await res.json();
         const favorites = await data.results;
         return favorites;

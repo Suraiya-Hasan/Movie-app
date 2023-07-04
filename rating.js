@@ -1,6 +1,6 @@
 const modalContent = document.getElementById('modal-content-rating');
 import { handleError } from "./js/errorHandling.js";
-import { IMG_URL, API_KEY, API_URL } from "./js/config.js";
+import { IMG_URL,account_id } from "./js/config.js";
 
 export async function addRating(id,value) {
   try {
@@ -19,8 +19,6 @@ export async function addRating(id,value) {
       if(value<0 || value>10 ) throw new Error(data.status_message);
       else if(value == null) return;
       else alert("Rating successfully stored ✔");
-      const rate = document.getElementById(`rate${id}`);
-      rate.classList.add('rated');
       await addToModalRating();
   } catch (error) {
       handleError(error.message);
@@ -36,7 +34,7 @@ export async function getRatedMovie() {
     }
   };
   
-  const res =await fetch('https://api.themoviedb.org/3/account/20033207/rated/movies?language=en-US&page=1&sort_by=created_at.desc', options)
+  const res =await fetch(`https://api.themoviedb.org/3/account/${account_id}/rated/movies?language=en-US&page=1&sort_by=created_at.desc`, options)
   const data = await res.json();
   const rated = await data.results;
   return rated;
@@ -68,9 +66,19 @@ export async function addToModalRating() {
               </h4>
               <div>
               <span>Your rating: ${rating}</span>
+              <button id='${id}remove' class="remove" style="float:right; margin-right:4px">Delete Rating</button>
+              <button id='${id}rate' class="rate" style="float:right">Rate again</button>
               </div>
               `;
               modalContent.appendChild(liEL);
+              document.getElementById(`${id}rate`).addEventListener('click',async()=>{
+                let value = (prompt("Enter a rating between 1 to 10:"));
+                await addRating(id, value);
+            })
+              document.getElementById(`${id}remove`).addEventListener('click',async()=>{
+                await removeRating(id);
+                await addToModalRating();
+            })
           }
   
       }
@@ -79,3 +87,20 @@ export async function addToModalRating() {
   }
 }
 
+async function removeRating(id){
+  const options = {
+    method: 'DELETE',
+    headers: {
+      accept: 'application/json',
+      'Content-Type': 'application/json;charset=utf-8',
+      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+    }
+  };
+  
+  fetch(`https://api.themoviedb.org/3/movie/${id}/rating`, options)
+    .then(response => response.json())
+    .then(response => {
+      addToModalRating();
+    })
+    .catch(err => handleError(err.message));
+}

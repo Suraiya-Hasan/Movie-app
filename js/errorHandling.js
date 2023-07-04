@@ -1,3 +1,3 @@
 export function handleError(err){
-    alert(err);
+    alert(`Something went wrong: ${err}`);
 }
