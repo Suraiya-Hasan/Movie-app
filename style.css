@@ -118,7 +118,6 @@ main {
   bottom: 0;
   background-color: whitesmoke;
   padding: 1rem;
-  max-height: 100%;
   transform: translateY(101%);
   -webkit-transform: translateY(101%);
   -moz-transform: translateY(101%);
@@ -138,7 +137,7 @@ main {
   color: var(--secondary-color);
   font-family: inherit;
   cursor: pointer;
-  align-content: normal;
+  text-align: left;
 }
 
 .movie:hover .overview {
@@ -698,6 +697,24 @@ hr {
   background-color: #7378c5;
   color: whitesmoke;
 }
+.dropdown-content a:hover:last-child {
+  background-color: #7378c5;
+  color: whitesmoke;
+  border-radius: 0px 0px 20px 20px;
+  -webkit-border-radius: 0px 0px 20px 20px;
+  -moz-border-radius: 0px 0px 20px 20px;
+  -ms-border-radius: 0px 0px 20px 20px;
+  -o-border-radius: 0px 0px 20px 20px;
+}
+.dropdown-content a:hover:first-child {
+  background-color: #7378c5;
+  color: whitesmoke;
+  border-radius: 20px 20px 0px 0px;
+  -webkit-border-radius: 20px 20px 0px 0px;
+  -moz-border-radius: 20px 20px 0px 0px;
+  -ms-border-radius: 20px 20px 0px 0px;
+  -o-border-radius: 20px 20px 0px 0px;
+}
 
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
@@ -708,6 +725,7 @@ hr {
   -ms-border-radius: 20px;
   -o-border-radius: 20px;
 }
+
 
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
@@ -741,14 +759,15 @@ hr {
   /* this adds the "card" effect */
   padding: 16px;
   text-align: justify;
-  background-color: #f1f1f1;
+  background-color: var(--secondary-color);
   margin-bottom: 10px;
 }
 .card-details{
   font-family: inherit;
   margin: 5px;
   padding: 2px;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: default;
 }
 
 /* Responsive columns - one column layout (vertical) on small screens */
