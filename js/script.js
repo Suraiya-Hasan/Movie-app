@@ -2,7 +2,7 @@
 import { API_URL, SRC_URL, IMG_URL } from "./config.js";
 
 import { addFavorite, removeFavorite, addToModal, getFavourite } from "./favorite.js";
-import { prevListener, nextListner } from "./pagination.js";
+import { prevListener, nextListner, scrollToResultTop } from "./pagination.js";
 import { setGenre } from "./genreTags.js";
 import { getMovies } from "./api.js";
 import { openNav, closeNav } from "./movieDetails.js";
@@ -155,3 +155,18 @@ closeWatchlistBtn.onclick = function () {
   modalWatchlist.style.display = "none";
 }
 
+const scroll = document.getElementById('scroll');
+scroll.addEventListener('click', topFunction);
+window.onscroll = function() {scrollFunction()};
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    scroll.style.display = "block";
+  } else {
+    scroll.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.documentElement.scrollIntoView({ behavior: 'smooth' });
+}
