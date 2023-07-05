@@ -53,7 +53,7 @@ export function clearBtn() {
     let clearBtn = document.getElementById('clear');
     if (clearBtn) {
         clearBtn.classList.add('highlight-red');
-    } else {
+    } else if(selectedGenre.length>=2) {
         let clear = document.createElement('div');
         clear.classList.add('tag', 'highlight-red');
         clear.id = 'clear';
