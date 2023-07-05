@@ -59,7 +59,7 @@
     grid-template-columns: 1fr 2rem;
     row-gap: 0.1rem;
     align-items: center;
-    cursor: pointer;
+    cursor: default;
 }
 
 hr {
