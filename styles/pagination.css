@@ -1,0 +1,29 @@
+.pagination {
+    display: flex;
+    margin: 10px 30px;
+    align-items: center;
+    justify-content: center;
+    color: whitesmoke;
+  }
+  
+  .page {
+    padding: 20px;
+    cursor: pointer;
+  }
+  
+  .page.disabled {
+    color: gray;
+    cursor: not-allowed;
+  }
+  
+  .current {
+    padding: 5px 15px;
+    border: 2px solid rgb(15, 15, 58);
+    border-radius: 50%;
+    font-size: 15px;
+    font-weight: 600;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+  }

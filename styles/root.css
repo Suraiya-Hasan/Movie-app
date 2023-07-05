@@ -1,0 +1,17 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+body {
+    background-color: var(--primary-color);
+    font-family: "Poppins", "sans-serif";
+    overflow-x: hidden;
+  }
+  
+  header {
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    background-color: var(--secondary-color);
+  }

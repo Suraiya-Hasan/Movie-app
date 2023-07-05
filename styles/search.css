@@ -1,0 +1,23 @@
+.search {
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    font-size: 1rem;
+    color: white;
+    font-family: inherit;
+    margin-right: 5px;
+  }
+  
+  .search:focus {
+    outline: 0;
+    background-color: var(--primary-color);
+  }
+  
+  .search::placeholder {
+    color: #7378c5;
+  }

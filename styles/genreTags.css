@@ -1,0 +1,31 @@
+#tags {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto;
+  }
+  
+  .tag {
+    color: whitesmoke;
+    padding: 10px 20px;
+    border-radius: 50px;
+    -webkit-border-radius: 50px;
+    -moz-border-radius: 50px;
+    -ms-border-radius: 50px;
+    -o-border-radius: 50px;
+    margin: 5px;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .tag.highlight {
+    background-color: whitesmoke;
+    color: var(--primary-color);
+  }
+  
+  .tag.highlight-red {
+    background-color: red;
+    color: whitesmoke;
+  }

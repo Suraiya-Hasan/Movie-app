@@ -1,0 +1,17 @@
+.scroll-top{
+    background-color: transparent;
+    position: fixed;
+    z-index: 1;
+    bottom: 0px;
+    right: 0px;
+    border:none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: 40px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+    color: whitesmoke;
+  }
