@@ -19,3 +19,14 @@
   --primary-color: #19515e;
   --secondary-color: #1c1f3a;
 }
+.logo{
+  margin-top: 22px;
+  width: 100%;
+}
+.logo a{
+  text-decoration: none;
+  color: whitesmoke;
+  cursor: pointer;
+  padding: 5px;
+  border: 1px double var(--primary-color);
+}
