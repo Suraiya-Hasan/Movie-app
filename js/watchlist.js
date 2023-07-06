@@ -1,4 +1,4 @@
-import { API_KEY, account_id, IMG_URL } from "./config.js";
+import { API_KEY, account_id, IMG_URL, BASE_URL, AUTHORIZATION_KEY } from "./config.js";
 import { handleError } from "./errorHandling.js";
 const modalContent = document.getElementById('modal-content-watchlist');
 
@@ -9,12 +9,12 @@ export async function addWatchlist(id) {
             headers: {
                 accept: 'application/json',
                 'content-type': 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+                Authorization: AUTHORIZATION_KEY
             },
             body: JSON.stringify({ media_type: 'movie', media_id: id, watchlist: true })
         };
 
-        const response = await fetch(`https://api.themoviedb.org/3/account/${account_id}/watchlist?` + API_KEY, options);
+        const response = await fetch(`${BASE_URL}/account/${account_id}/watchlist?` + API_KEY, options);
         const data = await response.json();
         await getWatchlist();
         await addToModalWatchlist();
@@ -31,12 +31,12 @@ export async function removeWatchlist(id) {
             headers: {
                 accept: 'application/json',
                 'content-type': 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+                Authorization: AUTHORIZATION_KEY
             },
             body: JSON.stringify({ media_type: 'movie', media_id: id, watchlist: false })
         };
 
-        const response = await fetch(`https://api.themoviedb.org/3/account/${account_id}/watchlist?` + API_KEY, options);
+        const response = await fetch(`${BASE_URL}/account/${account_id}/watchlist?` + API_KEY, options);
         const data = await response.json();
         await getWatchlist();
         await addToModalWatchlist();
@@ -51,11 +51,11 @@ export async function getWatchlist() {
             method: 'GET',
             headers: {
                 accept: 'application/json',
-                Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+                Authorization: AUTHORIZATION_KEY
             }
         };
     
-        const response = await fetch('https://api.themoviedb.org/3/account/20033207/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc', options);
+        const response = await fetch(`${BASE_URL}/account/${account_id}/watchlist/movies?language=en-US&page=1&sort_by=created_at.asc`, options);
         const data = await response.json();
         const watchlist = await data.results;
         return watchlist;

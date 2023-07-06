@@ -5,7 +5,7 @@ import {showMovies} from "../js/script.js"
 import { addToModalRating, getRatedMovie } from "./rating.js";
 import { handleError } from "./errorHandling.js";
 import { addToModalWatchlist, getWatchlist } from "./watchlist.js";
-//fetching data
+
 export const getMovies = async function (url) {
     lastURL = url;
     try {

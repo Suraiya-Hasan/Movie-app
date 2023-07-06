@@ -20,7 +20,7 @@ export function controlPage(data) {
         next.classList.remove('disabled');
     }
     else if (currentPage >= totalPages) {
-        next.classList.add('disbled');
+        next.classList.add('disabled');
         prev.classList.remove('disabled');
     } else {
         prev.classList.remove('disabled');
@@ -51,7 +51,7 @@ export function scrollToResultTop() {
     tagsEl.scrollIntoView({ behavior: 'smooth' });
 }
 
-export function nextListner(){
+export function nextListener(){
     if (nextPage <= totalPages) {
         pageCall(nextPage);
     }

@@ -1,7 +1,7 @@
 import { handleError } from "./errorHandling.js";
 import { addRating } from "./rating.js";
 import { addFavorite } from "./favorite.js";
-import { API_KEY, BASE_URL, IMG_URL } from "./config.js";
+import { API_KEY, AUTHORIZATION_KEY, BASE_URL, IMG_URL } from "./config.js";
 import { addWatchlist } from "./watchlist.js";
 let modalSingle = document.getElementById('singleModal');
 const closeSingleBtn = document.getElementById('close-single');
@@ -12,7 +12,7 @@ export async function getMovieById(id) {
         method: 'GET',
         headers: {
           accept: 'application/json',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+          Authorization: AUTHORIZATION_KEY
         }
       };
   
@@ -44,7 +44,7 @@ export async function showDetails(id) {
             ${data.overview}
           </div>
           <div class="buttonsSingle">
-            <button class='single' id="favor">Add to Favourites</button>
+            <button class='single' id="favor">Add to Favorites</button>
             <button class='single' id='rate'>Rate the Movie</button>
             <button class='single' id='watchlist'>Add to Watchlist</button>
           </div>

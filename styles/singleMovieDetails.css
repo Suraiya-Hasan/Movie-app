@@ -17,6 +17,7 @@
     /* Fallback color */
     background-color: rgba(0, 0, 0, 0.4);
     /* Black w/ opacity */
+    overflow: hidden;
   }
   
   /* Modal Content/Box */
@@ -28,6 +29,7 @@
     border: 1px solid #888;
     width: 80%;
     /* Could be more or less, depending on screen size */
+    overflow: hidden;
   }
 
 .containerSingle {

@@ -1,6 +1,6 @@
 const modalContent = document.getElementById('modal-content-rating');
 import { handleError } from "./errorHandling.js";
-import { IMG_URL,account_id } from "./config.js";
+import { AUTHORIZATION_KEY, BASE_URL, IMG_URL,account_id } from "./config.js";
 
 export async function addRating(id,value) {
   try {
@@ -9,12 +9,12 @@ export async function addRating(id,value) {
         headers: {
           accept: 'application/json',
           'Content-Type': 'application/json;charset=utf-8',
-          Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+          Authorization: AUTHORIZATION_KEY
         },
         body: `{"value": ${value}}`
       };
     
-      const res = await fetch(`https://api.themoviedb.org/3/movie/${id}/rating?`, options);
+      const res = await fetch(`${BASE_URL}/movie/${id}/rating?`, options);
       const data = await res.json();
       if(value<0 || value>10 ) throw new Error(data.status_message);
       else if(value == null) return;
@@ -30,11 +30,11 @@ export async function getRatedMovie() {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI3ZDMzYzY2YmMxZjc5NzUwMjAzN2M3MTBiYTZkNDU2MyIsInN1YiI6IjY0OTA1NmM1YzNjODkxMDEyZDVlZGQ5NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.JZmqkExo4mc6PlkHlvspxLOzktz_PWWU-paepfMOHOg'
+      Authorization: AUTHORIZATION_KEY
     }
   };
   
-  const res =await fetch(`https://api.themoviedb.org/3/account/${account_id}/rated/movies?language=en-US&page=1&sort_by=created_at.desc`, options)
+  const res =await fetch(`${BASE_URL}/account/${account_id}/rated/movies?language=en-US&page=1&sort_by=created_at.desc`, options)
   const data = await res.json();
   const rated = await data.results;
   return rated;

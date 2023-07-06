@@ -2,7 +2,7 @@
 import { API_URL, SRC_URL, IMG_URL } from "./config.js";
 
 import { addFavorite, removeFavorite, addToModal, getFavourite } from "./favorite.js";
-import { prevListener, nextListner, scrollToResultTop } from "./pagination.js";
+import { prevListener, nextListener, scrollToResultTop } from "./pagination.js";
 import { setGenre } from "./genreTags.js";
 import { getMovies } from "./api.js";
 import { openNav, closeNav } from "./movieDetails.js";
@@ -109,7 +109,7 @@ function getColor(vote) {
 
 
 
-next.addEventListener('click', nextListner);
+next.addEventListener('click', nextListener);
 prev.addEventListener('click', prevListener)
 closeBtn.addEventListener('click', closeNav);
 fvModalBtn.onclick = function () {
