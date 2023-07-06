@@ -2,13 +2,13 @@
 import { API_URL, SRC_URL, IMG_URL } from "./config.js";
 
 import { addFavorite, removeFavorite, addToModal, getFavourite } from "./favorite.js";
-import { prevListener, nextListener, scrollToResultTop } from "./pagination.js";
+import { prevListener, nextListener } from "./pagination.js";
 import { setGenre } from "./genreTags.js";
 import { getMovies } from "./api.js";
 import { openNav, closeNav } from "./movieDetails.js";
 import { getMovieById, showDetails } from "./singleMovieDetail.js";
 
-
+const SCROLL_MARGIN = 30;
 const form = document.getElementById('form');
 const search = document.getElementById('search');
 
@@ -159,7 +159,7 @@ const scroll = document.getElementById('scroll');
 scroll.addEventListener('click', topFunction);
 window.onscroll = function() {scrollFunction()};
 function scrollFunction() {
-  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+  if (document.body.scrollTop > SCROLL_MARGIN || document.documentElement.scrollTop > SCROLL_MARGIN) {
     scroll.style.display = "block";
   } else {
     scroll.style.display = "none";
